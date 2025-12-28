@@ -31,8 +31,8 @@ export function AnalysisChecklist({ items }: AnalysisChecklistProps) {
   };
 
   return (
-    <div className="space-y-2">
-      <h3 className="mb-3 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+    <div className="space-y-3">
+      <h3 className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
         Analysis Checklist
       </h3>
       <div className="space-y-2">
@@ -42,23 +42,27 @@ export function AnalysisChecklist({ items }: AnalysisChecklistProps) {
             open={openItems.has(index)}
             onOpenChange={() => toggleItem(index)}
           >
-            <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border bg-card p-3 text-left transition-colors hover:bg-muted/50">
+            <CollapsibleTrigger className="flex w-full items-center justify-between rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm p-4 text-left transition-all hover:bg-secondary/30">
               <div className="flex items-center gap-3">
                 {item.passed ? (
-                  <CheckCircle2 className="h-5 w-5 text-success" />
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-success/10">
+                    <CheckCircle2 className="h-4 w-4 text-success" />
+                  </div>
                 ) : (
-                  <XCircle className="h-5 w-5 text-destructive" />
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-destructive/10">
+                    <XCircle className="h-4 w-4 text-destructive" />
+                  </div>
                 )}
-                <span className="font-medium">{item.label}</span>
+                <span className="font-medium text-sm">{item.label}</span>
               </div>
               <ChevronDown
                 className={cn(
-                  "h-4 w-4 text-muted-foreground transition-transform",
+                  "h-4 w-4 text-muted-foreground transition-transform duration-200",
                   openItems.has(index) && "rotate-180"
                 )}
               />
             </CollapsibleTrigger>
-            <CollapsibleContent className="px-11 py-2 text-sm text-muted-foreground">
+            <CollapsibleContent className="px-4 py-3 text-sm text-muted-foreground ml-9">
               {item.details}
             </CollapsibleContent>
           </Collapsible>

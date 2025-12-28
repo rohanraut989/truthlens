@@ -12,39 +12,78 @@ export function CredibilityScore({ score, level }: CredibilityScoreProps) {
     return "text-destructive";
   };
 
-  const getBgColor = () => {
-    if (level === "High") return "bg-success/10 border-success/30";
-    if (level === "Medium") return "bg-warning/10 border-warning/30";
-    return "bg-destructive/10 border-destructive/30";
+  const getStrokeColor = () => {
+    if (level === "High") return "stroke-success";
+    if (level === "Medium") return "stroke-warning";
+    return "stroke-destructive";
   };
 
-  const getProgressColor = () => {
-    if (level === "High") return "bg-success";
-    if (level === "Medium") return "bg-warning";
-    return "bg-destructive";
+  const getGlowClass = () => {
+    if (level === "High") return "glow-success";
+    if (level === "Medium") return "glow-warning";
+    return "glow-destructive";
   };
+
+  const getBadgeColor = () => {
+    if (level === "High") return "bg-success text-success-foreground";
+    if (level === "Medium") return "bg-warning text-warning-foreground";
+    return "bg-destructive text-destructive-foreground";
+  };
+
+  // SVG circle calculations
+  const size = 180;
+  const strokeWidth = 12;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (score / 100) * circumference;
 
   return (
-    <div className={cn("rounded-xl border-2 p-6 text-center", getBgColor())}>
-      <div className="mb-2 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+    <div className={cn("rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-8 text-center", getGlowClass())}>
+      <div className="mb-4 text-sm font-medium uppercase tracking-widest text-muted-foreground">
         Credibility Score
       </div>
-      <div className={cn("text-5xl font-bold", getColor())}>{score}</div>
-      <div className="mt-2 text-sm text-muted-foreground">out of 100</div>
-
-      <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-muted">
-        <div
-          className={cn("h-full transition-all duration-500", getProgressColor())}
-          style={{ width: `${score}%` }}
-        />
+      
+      {/* Circular Score Indicator */}
+      <div className="relative mx-auto" style={{ width: size, height: size }}>
+        {/* Background circle */}
+        <svg className="absolute inset-0 -rotate-90" width={size} height={size}>
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={strokeWidth}
+            className="text-secondary"
+          />
+          {/* Progress circle */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+            className={cn("transition-all duration-1000 ease-out", getStrokeColor())}
+            style={{
+              strokeDasharray: circumference,
+              strokeDashoffset: strokeDashoffset,
+            }}
+          />
+        </svg>
+        
+        {/* Score text */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className={cn("text-5xl font-bold", getColor())}>{score}</span>
+          <span className="text-sm text-muted-foreground">out of 100</span>
+        </div>
       </div>
 
+      {/* Credibility Badge */}
       <div
         className={cn(
-          "mt-4 inline-flex items-center rounded-full px-4 py-1.5 text-sm font-semibold",
-          level === "High" && "bg-success text-success-foreground",
-          level === "Medium" && "bg-warning text-warning-foreground",
-          level === "Low" && "bg-destructive text-destructive-foreground"
+          "mt-6 inline-flex items-center rounded-full px-5 py-2 text-sm font-semibold",
+          getBadgeColor()
         )}
       >
         {level} Credibility
