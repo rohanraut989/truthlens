@@ -54,16 +54,16 @@ export function HistoryPanel({ history, onSelect, onDelete, onClear }: HistoryPa
         <Button variant="ghost" size="icon" className="relative hover:bg-secondary/50">
           <History className="h-5 w-5" />
           {history.length > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-foreground text-[10px] font-bold text-background">
               {history.length > 9 ? "9+" : history.length}
             </span>
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-md border-border/50 bg-card">
+      <SheetContent className="w-full sm:max-w-md border-border/30 bg-background/95 backdrop-blur-xl">
         <SheetHeader className="space-y-1">
           <SheetTitle className="flex items-center gap-2">
-            <History className="h-5 w-5 text-primary" />
+            <History className="h-5 w-5 text-muted-foreground" />
             Analysis History
           </SheetTitle>
           {history.length > 0 && (
@@ -75,7 +75,7 @@ export function HistoryPanel({ history, onSelect, onDelete, onClear }: HistoryPa
 
         {history.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/50">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/30">
               <Clock className="h-8 w-8 text-muted-foreground/50" />
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
@@ -89,7 +89,7 @@ export function HistoryPanel({ history, onSelect, onDelete, onClear }: HistoryPa
                 {history.map((entry) => (
                   <div
                     key={entry.id}
-                    className="group rounded-xl border border-border/50 bg-secondary/20 p-4 transition-all hover:bg-secondary/40 cursor-pointer"
+                    className="group rounded-xl border border-border/30 bg-secondary/10 p-4 transition-all hover:bg-secondary/20 cursor-pointer"
                     onClick={() => onSelect(entry)}
                   >
                     <div className="flex items-start justify-between gap-2">
@@ -127,11 +127,11 @@ export function HistoryPanel({ history, onSelect, onDelete, onClear }: HistoryPa
               </div>
             </ScrollArea>
 
-            <div className="mt-4 border-t border-border/50 pt-4">
+            <div className="mt-4 border-t border-border/30 pt-4">
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 border-border/50"
+                className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 border-border/30"
                 onClick={onClear}
               >
                 <Trash2 className="mr-2 h-4 w-4" />

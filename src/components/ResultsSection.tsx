@@ -1,8 +1,7 @@
 import { AnalysisResult } from "@/types/analysis";
 import { CredibilityScore } from "./CredibilityScore";
 import { AnalysisChecklist } from "./AnalysisChecklist";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertTriangle, CheckCircle, Info, Lightbulb } from "lucide-react";
+import { AlertTriangle, CheckCircle, Info, Lightbulb, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -48,10 +47,10 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
 
   const getSharingStyles = () => {
     if (result.sharingAdvice.includes("Safe")) 
-      return "bg-success/10 border-success/30 text-success glow-success";
+      return "bg-success/10 border-success/30 text-success";
     if (result.sharingAdvice.includes("Avoid")) 
-      return "bg-destructive/10 border-destructive/30 text-destructive glow-destructive";
-    return "bg-warning/10 border-warning/30 text-warning glow-warning";
+      return "bg-destructive/10 border-destructive/30 text-destructive";
+    return "bg-warning/10 border-warning/30 text-warning";
   };
 
   const SharingIcon = getSharingIcon();
@@ -62,7 +61,7 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
       <CredibilityScore score={result.credibilityScore} level={result.credibilityLevel} />
 
       {/* Sharing Advice */}
-      <div className={cn("flex items-center gap-4 rounded-xl border-2 p-5 transition-all", getSharingStyles())}>
+      <div className={cn("flex items-center gap-4 rounded-xl border-2 p-5 glass-card transition-all", getSharingStyles())}>
         <SharingIcon className="h-6 w-6 flex-shrink-0" />
         <div>
           <div className="font-semibold text-base">Sharing Advice</div>
@@ -71,32 +70,28 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
       </div>
 
       {/* Analysis Findings */}
-      <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-base">
-            <Info className="h-4 w-4 text-primary" />
-            Why this score?
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-3">
-            {result.reasons.map((reason, index) => (
-              <li key={index} className="flex items-start gap-3 text-sm">
-                <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
-                <span className="text-muted-foreground">{reason}</span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
+      <div className="glass-card glow-border rounded-2xl p-6">
+        <h3 className="flex items-center gap-2 text-base font-semibold mb-4">
+          <Info className="h-4 w-4 text-muted-foreground" />
+          Why this score?
+        </h3>
+        <ul className="space-y-3">
+          {result.reasons.map((reason, index) => (
+            <li key={index} className="flex items-start gap-3 text-sm">
+              <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-foreground/50" />
+              <span className="text-muted-foreground">{reason}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {/* Critical Thinking Prompt */}
-      <div className="flex items-start gap-4 rounded-xl bg-primary/5 border border-primary/20 p-5">
-        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
-          <Lightbulb className="h-5 w-5 text-primary" />
+      <div className="flex items-start gap-4 rounded-xl bg-secondary/20 border border-border/50 p-5 glass-card">
+        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-secondary/50">
+          <Lightbulb className="h-5 w-5 text-foreground/80" />
         </div>
         <div>
-          <div className="font-semibold text-primary">Think Before You Share</div>
+          <div className="font-semibold text-foreground">Think Before You Share</div>
           <p className="mt-1 text-sm text-muted-foreground">{result.criticalThinkingPrompt}</p>
         </div>
       </div>
@@ -110,6 +105,7 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
         onClick={onReset} 
         className="w-full h-12 border-border/50 hover:bg-secondary/50 transition-all"
       >
+        <RotateCcw className="mr-2 h-4 w-4" />
         Analyze Another Content
       </Button>
     </div>

@@ -32,13 +32,13 @@ export function CredibilityScore({ score, level }: CredibilityScoreProps) {
 
   // SVG circle calculations
   const size = 180;
-  const strokeWidth = 12;
+  const strokeWidth = 10;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (score / 100) * circumference;
 
   return (
-    <div className={cn("rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-8 text-center", getGlowClass())}>
+    <div className={cn("glass-card glow-border rounded-2xl p-8 text-center", getGlowClass())}>
       <div className="mb-4 text-sm font-medium uppercase tracking-widest text-muted-foreground">
         Credibility Score
       </div>
@@ -54,7 +54,7 @@ export function CredibilityScore({ score, level }: CredibilityScoreProps) {
             fill="none"
             stroke="currentColor"
             strokeWidth={strokeWidth}
-            className="text-secondary"
+            className="text-secondary/50"
           />
           {/* Progress circle */}
           <circle
