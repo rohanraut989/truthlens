@@ -28,10 +28,10 @@ const Index = () => {
         <div className="container mx-auto flex items-center justify-between px-4 py-4">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground">
-                <Eye className="h-5 w-5 text-background" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
+                <Eye className="h-5 w-5 text-primary-foreground" />
               </div>
-              <div className="absolute -inset-1 rounded-xl bg-foreground/20 blur-lg -z-10" />
+              <div className="absolute -inset-1 rounded-xl bg-primary/30 blur-lg -z-10" />
             </div>
             <div>
               <h1 className="text-lg font-bold tracking-tight">TruthLens</h1>
@@ -39,7 +39,7 @@ const Index = () => {
             </div>
           </div>
           <Link to="/verify">
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2 btn-glow btn-press">
               Verify Now
               <ArrowRight className="h-4 w-4" />
             </Button>
@@ -55,10 +55,10 @@ const Index = () => {
             {/* Logo Animation */}
             <div className="inline-flex items-center justify-center mb-4">
               <div className="relative">
-                <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-foreground float">
-                  <Eye className="h-10 w-10 text-background" />
+                <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary float">
+                  <Eye className="h-10 w-10 text-primary-foreground" />
                 </div>
-                <div className="absolute -inset-2 rounded-2xl bg-foreground/10 blur-2xl animate-glow-pulse" />
+                <div className="absolute -inset-2 rounded-2xl bg-primary/20 blur-2xl animate-glow-pulse" />
               </div>
             </div>
 
@@ -82,12 +82,12 @@ const Index = () => {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="feature-card group"
+                  className="feature-card card-hover group"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="flex flex-col items-center text-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/50 group-hover:bg-secondary transition-colors">
-                      <feature.icon className="h-6 w-6 text-foreground/80" />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                      <feature.icon className="h-6 w-6 text-primary" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-sm">{feature.title}</h3>
@@ -103,7 +103,7 @@ const Index = () => {
               <Link to="/verify">
                 <Button 
                   size="lg" 
-                  className="shimmer-button gap-3 text-lg px-8 py-6 h-auto font-semibold"
+                  className="shimmer-button btn-glow btn-press gap-3 text-lg px-8 py-6 h-auto font-semibold"
                 >
                   Get Started
                   <ArrowRight className="h-5 w-5" />

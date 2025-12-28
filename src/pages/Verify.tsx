@@ -44,7 +44,7 @@ const Verify = () => {
           <div className="flex items-center gap-4">
             <Link 
               to="/" 
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
             >
               <ArrowLeft className="h-4 w-4" />
               <span className="text-sm">Home</span>
@@ -52,10 +52,10 @@ const Verify = () => {
             <div className="h-6 w-px bg-border/50" />
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground">
-                  <Eye className="h-5 w-5 text-background" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
+                  <Eye className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <div className="absolute -inset-1 rounded-xl bg-foreground/20 blur-lg -z-10" />
+                <div className="absolute -inset-1 rounded-xl bg-primary/30 blur-lg -z-10" />
               </div>
               <div>
                 <h1 className="text-lg font-bold tracking-tight">TruthLens</h1>
@@ -77,7 +77,7 @@ const Verify = () => {
         <div className="mx-auto max-w-2xl space-y-8">
           {/* Error Alert */}
           {error && (
-            <Alert variant="destructive" className="animate-fade-in glass-card">
+            <Alert variant="destructive" className="animate-fade-in glass-card alert-calm border-l-destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>{error}</AlertDescription>
             </Alert>
@@ -85,7 +85,7 @@ const Verify = () => {
 
           {/* Input or Results */}
           {result ? (
-            <div className="animate-fade-in">
+            <div className="animate-fade-in-up">
               <ResultsSection result={result} onReset={reset} />
             </div>
           ) : (

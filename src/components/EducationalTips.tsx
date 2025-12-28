@@ -27,14 +27,17 @@ export function EducationalTips() {
   return (
     <div className="glass-card glow-border rounded-2xl p-6">
       <h3 className="flex items-center gap-2 text-base font-semibold mb-4">
-        <BookOpen className="h-4 w-4 text-muted-foreground" />
+        <BookOpen className="h-4 w-4 text-primary" />
         Tips for Spotting Misinformation
       </h3>
       <div className="grid gap-4 sm:grid-cols-2">
         {tips.map((tip, index) => (
-          <div key={index} className="flex gap-3 p-3 rounded-xl bg-secondary/20 hover:bg-secondary/30 transition-colors border border-border/30">
-            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-secondary/50">
-              <tip.icon className="h-4 w-4 text-foreground/70" />
+          <div 
+            key={index} 
+            className="flex gap-3 p-3 rounded-xl bg-secondary/20 hover:bg-primary/10 transition-all duration-300 border border-border/30 hover:border-primary/30 card-hover"
+          >
+            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
+              <tip.icon className="h-4 w-4 text-primary" />
             </div>
             <div>
               <h4 className="font-medium text-sm">{tip.title}</h4>
