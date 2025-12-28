@@ -51,19 +51,19 @@ export function HistoryPanel({ history, onSelect, onDelete, onClear }: HistoryPa
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
+        <Button variant="ghost" size="icon" className="relative hover:bg-secondary/50">
           <History className="h-5 w-5" />
           {history.length > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground">
+            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
               {history.length > 9 ? "9+" : history.length}
             </span>
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-md">
+      <SheetContent className="w-full sm:max-w-md border-border/50 bg-card">
         <SheetHeader className="space-y-1">
           <SheetTitle className="flex items-center gap-2">
-            <History className="h-5 w-5" />
+            <History className="h-5 w-5 text-primary" />
             Analysis History
           </SheetTitle>
           {history.length > 0 && (
@@ -74,45 +74,47 @@ export function HistoryPanel({ history, onSelect, onDelete, onClear }: HistoryPa
         </SheetHeader>
 
         {history.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
-            <Clock className="h-12 w-12 text-muted-foreground/50" />
+          <div className="flex flex-col items-center justify-center py-16 text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary/50">
+              <Clock className="h-8 w-8 text-muted-foreground/50" />
+            </div>
             <p className="mt-4 text-sm text-muted-foreground">
               No history yet. Analyzed content will appear here.
             </p>
           </div>
         ) : (
           <>
-            <ScrollArea className="mt-4 h-[calc(100vh-200px)]">
+            <ScrollArea className="mt-6 h-[calc(100vh-220px)]">
               <div className="space-y-3 pr-4">
                 {history.map((entry) => (
                   <div
                     key={entry.id}
-                    className="group rounded-lg border bg-card p-3 transition-colors hover:bg-accent/50 cursor-pointer"
+                    className="group rounded-xl border border-border/50 bg-secondary/20 p-4 transition-all hover:bg-secondary/40 cursor-pointer"
                     onClick={() => onSelect(entry)}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         {entry.contentType === "url" ? (
-                          <ExternalLink className="h-3 w-3" />
+                          <ExternalLink className="h-3.5 w-3.5" />
                         ) : (
-                          <FileText className="h-3 w-3" />
+                          <FileText className="h-3.5 w-3.5" />
                         )}
                         <span>{formatDate(entry.createdAt)}</span>
                       </div>
                       <Badge 
                         variant="outline" 
-                        className={cn("text-xs", getLevelColor(entry.result.credibilityLevel))}
+                        className={cn("text-xs font-semibold", getLevelColor(entry.result.credibilityLevel))}
                       >
                         {entry.result.credibilityScore}%
                       </Badge>
                     </div>
-                    <p className="mt-2 text-sm line-clamp-2">
+                    <p className="mt-2 text-sm line-clamp-2 text-foreground/80">
                       {entry.contentPreview}
                     </p>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="mt-2 h-7 w-7 opacity-0 transition-opacity group-hover:opacity-100"
+                      className="mt-2 h-7 w-7 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-destructive/10"
                       onClick={(e) => {
                         e.stopPropagation();
                         onDelete(entry.id);
@@ -125,11 +127,11 @@ export function HistoryPanel({ history, onSelect, onDelete, onClear }: HistoryPa
               </div>
             </ScrollArea>
 
-            <div className="mt-4 border-t pt-4">
+            <div className="mt-4 border-t border-border/50 pt-4">
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full text-destructive hover:text-destructive"
+                className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 border-border/50"
                 onClick={onClear}
               >
                 <Trash2 className="mr-2 h-4 w-4" />
