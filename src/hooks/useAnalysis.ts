@@ -38,5 +38,5 @@ export function useAnalysis() {
     setError(null);
   };
 
-  return { analyze, isLoading, result, error, reset };
+  return { analyze, isLoading, result, error, reset, setResult };
 }
