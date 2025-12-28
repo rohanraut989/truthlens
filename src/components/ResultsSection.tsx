@@ -47,10 +47,10 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
 
   const getSharingStyles = () => {
     if (result.sharingAdvice.includes("Safe")) 
-      return "bg-success/10 border-success/30 text-success";
+      return "bg-success/10 border-l-4 border-l-success border-y border-r border-success/20 text-success";
     if (result.sharingAdvice.includes("Avoid")) 
-      return "bg-destructive/10 border-destructive/30 text-destructive";
-    return "bg-warning/10 border-warning/30 text-warning";
+      return "bg-destructive/10 border-l-4 border-l-destructive border-y border-r border-destructive/20 text-destructive";
+    return "bg-warning/10 border-l-4 border-l-warning border-y border-r border-warning/20 text-warning";
   };
 
   const SharingIcon = getSharingIcon();
@@ -58,10 +58,12 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
   return (
     <div className="space-y-6">
       {/* Credibility Score */}
-      <CredibilityScore score={result.credibilityScore} level={result.credibilityLevel} />
+      <div className="animate-fade-in-up stagger-1">
+        <CredibilityScore score={result.credibilityScore} level={result.credibilityLevel} />
+      </div>
 
       {/* Sharing Advice */}
-      <div className={cn("flex items-center gap-4 rounded-xl border-2 p-5 glass-card transition-all", getSharingStyles())}>
+      <div className={cn("flex items-center gap-4 rounded-xl p-5 glass-card transition-all duration-300 animate-fade-in-up stagger-2", getSharingStyles())}>
         <SharingIcon className="h-6 w-6 flex-shrink-0" />
         <div>
           <div className="font-semibold text-base">Sharing Advice</div>
@@ -70,15 +72,15 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
       </div>
 
       {/* Analysis Findings */}
-      <div className="glass-card glow-border rounded-2xl p-6">
+      <div className="glass-card glow-border rounded-2xl p-6 card-hover animate-fade-in-up stagger-3">
         <h3 className="flex items-center gap-2 text-base font-semibold mb-4">
-          <Info className="h-4 w-4 text-muted-foreground" />
+          <Info className="h-4 w-4 text-primary" />
           Why this score?
         </h3>
         <ul className="space-y-3">
           {result.reasons.map((reason, index) => (
             <li key={index} className="flex items-start gap-3 text-sm">
-              <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-foreground/50" />
+              <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/50" />
               <span className="text-muted-foreground">{reason}</span>
             </li>
           ))}
@@ -86,9 +88,9 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
       </div>
 
       {/* Critical Thinking Prompt */}
-      <div className="flex items-start gap-4 rounded-xl bg-secondary/20 border border-border/50 p-5 glass-card">
-        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-secondary/50">
-          <Lightbulb className="h-5 w-5 text-foreground/80" />
+      <div className="flex items-start gap-4 rounded-xl bg-primary/5 border border-primary/20 p-5 glass-card card-hover animate-fade-in-up stagger-4">
+        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
+          <Lightbulb className="h-5 w-5 text-primary" />
         </div>
         <div>
           <div className="font-semibold text-foreground">Think Before You Share</div>
@@ -97,13 +99,15 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
       </div>
 
       {/* Checklist */}
-      <AnalysisChecklist items={checklistItems} />
+      <div className="animate-fade-in-up stagger-5">
+        <AnalysisChecklist items={checklistItems} />
+      </div>
 
       {/* Reset Button */}
       <Button 
         variant="outline" 
         onClick={onReset} 
-        className="w-full h-12 border-border/50 hover:bg-secondary/50 transition-all"
+        className="w-full h-12 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 btn-glow btn-press transition-all duration-300"
       >
         <RotateCcw className="mr-2 h-4 w-4" />
         Analyze Another Content

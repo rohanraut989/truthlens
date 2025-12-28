@@ -25,9 +25,9 @@ export function CredibilityScore({ score, level }: CredibilityScoreProps) {
   };
 
   const getBadgeColor = () => {
-    if (level === "High") return "bg-success text-success-foreground";
-    if (level === "Medium") return "bg-warning text-warning-foreground";
-    return "bg-destructive text-destructive-foreground";
+    if (level === "High") return "bg-success/20 text-success border border-success/30";
+    if (level === "Medium") return "bg-warning/20 text-warning border border-warning/30";
+    return "bg-destructive/20 text-destructive border border-destructive/30";
   };
 
   // SVG circle calculations
@@ -38,7 +38,7 @@ export function CredibilityScore({ score, level }: CredibilityScoreProps) {
   const strokeDashoffset = circumference - (score / 100) * circumference;
 
   return (
-    <div className={cn("glass-card glow-border rounded-2xl p-8 text-center", getGlowClass())}>
+    <div className={cn("glass-card glow-border rounded-2xl p-8 text-center transition-all duration-500", getGlowClass())}>
       <div className="mb-4 text-sm font-medium uppercase tracking-widest text-muted-foreground">
         Credibility Score
       </div>
@@ -64,7 +64,7 @@ export function CredibilityScore({ score, level }: CredibilityScoreProps) {
             fill="none"
             strokeWidth={strokeWidth}
             strokeLinecap="round"
-            className={cn("transition-all duration-1000 ease-out", getStrokeColor())}
+            className={cn("score-ring-transition", getStrokeColor())}
             style={{
               strokeDasharray: circumference,
               strokeDashoffset: strokeDashoffset,
@@ -74,7 +74,7 @@ export function CredibilityScore({ score, level }: CredibilityScoreProps) {
         
         {/* Score text */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className={cn("text-5xl font-bold", getColor())}>{score}</span>
+          <span className={cn("text-5xl font-bold transition-colors duration-500", getColor())}>{score}</span>
           <span className="text-sm text-muted-foreground">out of 100</span>
         </div>
       </div>
@@ -82,7 +82,7 @@ export function CredibilityScore({ score, level }: CredibilityScoreProps) {
       {/* Credibility Badge */}
       <div
         className={cn(
-          "mt-6 inline-flex items-center rounded-full px-5 py-2 text-sm font-semibold",
+          "mt-6 inline-flex items-center rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300",
           getBadgeColor()
         )}
       >
