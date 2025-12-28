@@ -3,6 +3,12 @@ export interface ChecklistResult {
   details: string;
 }
 
+export interface WebSources {
+  citations: string[];
+  searchSummary: string;
+  verifiedAt: string;
+}
+
 export interface AnalysisResult {
   credibilityScore: number;
   credibilityLevel: "High" | "Medium" | "Low";
@@ -16,4 +22,5 @@ export interface AnalysisResult {
     evidenceVerification: ChecklistResult;
     crisisContext: ChecklistResult;
   };
+  webSources?: WebSources;
 }

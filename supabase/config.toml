@@ -1,1 +1,7 @@
 project_id = "plcsfrbqnitkwyhaidmo"
+
+[functions.analyze-content]
+verify_jwt = false
+
+[functions.verify-with-perplexity]
+verify_jwt = false
