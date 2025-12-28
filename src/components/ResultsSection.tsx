@@ -1,9 +1,11 @@
 import { AnalysisResult } from "@/types/analysis";
 import { CredibilityScore } from "./CredibilityScore";
 import { AnalysisChecklist } from "./AnalysisChecklist";
-import { AlertTriangle, CheckCircle, Info, Lightbulb, RotateCcw } from "lucide-react";
+import { AlertTriangle, CheckCircle, Info, Lightbulb, RotateCcw, ExternalLink, Globe, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useState } from "react";
 
 interface ResultsSectionProps {
   result: AnalysisResult;
@@ -11,6 +13,8 @@ interface ResultsSectionProps {
 }
 
 export function ResultsSection({ result, onReset }: ResultsSectionProps) {
+  const [sourcesOpen, setSourcesOpen] = useState(false);
+
   const checklistItems = [
     {
       label: "Source Credibility",
@@ -55,6 +59,26 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
 
   const SharingIcon = getSharingIcon();
 
+  const formatDomain = (url: string) => {
+    try {
+      const domain = new URL(url).hostname.replace('www.', '');
+      return domain;
+    } catch {
+      return url;
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    try {
+      return new Date(dateString).toLocaleString(undefined, {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      });
+    } catch {
+      return dateString;
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Credibility Score */}
@@ -70,6 +94,59 @@ export function ResultsSection({ result, onReset }: ResultsSectionProps) {
           <div className="text-sm opacity-90 mt-0.5">{result.sharingAdvice}</div>
         </div>
       </div>
+
+      {/* Web Sources - Collapsible */}
+      {result.webSources && result.webSources.citations.length > 0 && (
+        <Collapsible open={sourcesOpen} onOpenChange={setSourcesOpen} className="animate-fade-in-up stagger-3">
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-full justify-between h-12 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-300"
+            >
+              <div className="flex items-center gap-2">
+                <Globe className="h-4 w-4" />
+                <span>View Sources ({result.webSources.citations.length})</span>
+              </div>
+              <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", sourcesOpen && "rotate-180")} />
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-3">
+            <div className="glass-card glow-border rounded-2xl p-5 space-y-4">
+              {/* Search Summary */}
+              <div className="text-sm text-muted-foreground">
+                {result.webSources.searchSummary}
+              </div>
+              
+              {/* Citation Links */}
+              <div className="space-y-2">
+                <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Sources</div>
+                <ul className="space-y-2">
+                  {result.webSources.citations.map((citation, index) => (
+                    <li key={index}>
+                      <a
+                        href={citation}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 hover:underline transition-colors group"
+                      >
+                        <ExternalLink className="h-3 w-3 flex-shrink-0 opacity-60 group-hover:opacity-100" />
+                        <span className="truncate">{formatDomain(citation)}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Verification Timestamp */}
+              <div className="pt-2 border-t border-border/30">
+                <div className="text-xs text-muted-foreground">
+                  Verified: {formatDate(result.webSources.verifiedAt)}
+                </div>
+              </div>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      )}
 
       {/* Analysis Findings */}
       <div className="glass-card glow-border rounded-2xl p-6 card-hover animate-fade-in-up stagger-3">
